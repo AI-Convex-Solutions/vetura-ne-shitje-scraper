@@ -8,14 +8,11 @@ from requests_html import HTMLSession
 
 import config
 
-headers = {
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36',
-}
 
 if __name__ == '__main__':
     Path(config.DATASET_FOLDER).mkdir(parents=True, exist_ok=True)
     session = HTMLSession()
-    page = session.get(config.URL, headers=headers)
+    page = session.get(config.URL, headers=config.HEADERS)
     content = BeautifulSoup(page.content, "html.parser")
     car_list = content.find('ul', class_="car-list").select("li[class='row']")
     for car in car_list:
@@ -30,7 +27,7 @@ if __name__ == '__main__':
             if year_location and "time" in year_location:
                 car_year = spec.get_text("\n", True)
                 break
-        car_page = session.get(url=f"{config.BASE_URL}{car_url}", headers=headers)
+        car_page = session.get(url=f"{config.BASE_URL}{car_url}", headers=config.HEADERS)
         car_content = BeautifulSoup(car_page.content, "html.parser")
         car_images = car_content.find("div", class_="carousel-inner").find_all("img", src=True)
         folder_name = f"{car_manufacturer.strip()}_{car_model.strip()}_{car_year.strip()}"
