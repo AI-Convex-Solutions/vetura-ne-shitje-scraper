@@ -1,7 +1,8 @@
 """Configuration file for all the code parameters."""
 
 URL = "https://www.veturaneshitje.com/vetura?page="
-PAGES_TO_SCRAPE = 2
+PAGE_FROM = 250
+PAGE_TO = 700
 BASE_URL = "https://www.veturaneshitje.com"
 DATASET_FOLDER = "data"
 HEADERS = {
